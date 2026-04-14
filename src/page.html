@@ -174,6 +174,19 @@
       text-align: center;
     }
 
+    .registry-link {
+      color: var(--silver);
+      text-align: center;
+      text-decoration: underline;
+      text-underline-offset: 0.18em;
+    }
+
+    .registry-link:hover,
+    .registry-link:focus-visible {
+      color: var(--text);
+      outline: none;
+    }
+
     form {
       display: grid;
       gap: 22px;
@@ -457,6 +470,8 @@
           </button>
           <div class="info-content">
             <div class="info-body">
+							6.7.2026
+							<br>
 							5:00 PM - 6:00 PM
 							<br>
 							<br>
@@ -481,6 +496,8 @@
           </button>
           <div class="info-content">
             <div class="info-body">
+							6.7.2026
+							<br>
 							6:30 PM - 9:00 PM
 							<br>
 							<br>
@@ -497,11 +514,6 @@
 						</div>
           </div>
         </section>
-
-      </div>
-
-      <div class="panel-header">
-				<div class="panel-title">RSVP</div>
       </div>
 
       <form id="rsvp-form">
@@ -532,6 +544,11 @@
         <button type="submit" id="submit-button">Submit</button>
         <p class="status" id="form-status" aria-live="polite"></p>
       </form>
+
+      <div class="panel-header">
+				<div class="panel-title">RSVP</div>
+        <a class="registry-link" href="https://www.myregistry.com/wedding-registry/bailey-miller-and-ryan-bennett/5397596" target="_blank" rel="noopener noreferrer">Wedding Registry</a>
+      </div>
 
     </section>
   </main>
