@@ -14,6 +14,7 @@
       --metal:		#c7ceb4;
       --silver:		#eef2df;
       --moss:			#4d5644;
+			--wine:			#e3d5d7;
       --earth:		#6a6b58;
       --line:			#3f433d;
       --text:			#f2f6e3;
@@ -154,11 +155,18 @@
       box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
     }
 
+    .panel-header {
+      display: grid;
+      gap: 12px;
+    }
+
+    .panel-title,
     .panel-header h2 {
-      margin: 0 0 12px;
-      font-size: 2rem;
-      font-weight: 400;
-      color: var(--silver);
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--wine);
+      text-align: center;
     }
 
     form {
@@ -262,6 +270,8 @@
       font-size: 0.9rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+      cursor: default;
+      user-select: none;
     }
 
     input,
@@ -429,7 +439,7 @@
 
     <section class="panel">
       <div class="panel-header">
-				DETAILS
+				<div class="panel-title">DETAILS</div>
       </div>
 
       <div class="info-drawer">
@@ -473,7 +483,7 @@
       </div>
 
       <div class="panel-header">
-				RSVP
+				<div class="panel-title">RSVP</div>
       </div>
 
       <form id="rsvp-form">
