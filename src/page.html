@@ -72,7 +72,8 @@
       max-width: 1400px;
       margin: 0 auto;
       min-height: calc(100vh - 48px);
-      display: flex;
+      display: grid;
+      grid-template-columns: clamp(22rem, 40vw, 40rem) minmax(20rem, 460px);
       justify-content: space-between;
       align-items: stretch;
       gap: 48px;
@@ -87,10 +88,13 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-self: flex-end;
+      align-self: start;
       gap: 20px;
-      min-height: 100%;
-      max-width: 40rem;
+      min-height: calc(100vh - 48px);
+      width: 100%;
+      max-width: none;
+      position: sticky;
+      top: 0;
       background: none;
       padding-left: 0;
       padding-bottom: 0;
@@ -386,7 +390,7 @@
 
     @media (max-width: 860px) {
       main {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         justify-content: flex-end;
         gap: 28px;
       }
@@ -395,6 +399,7 @@
         min-height: auto;
         max-width: none;
         align-self: stretch;
+        position: static;
         padding: 48px 48px 0;
       }
 
@@ -444,7 +449,6 @@
       </div>
 
       <div class="info-drawer">
-        
 				<section class="info-section">
           <button class="info-toggle" type="button" aria-expanded="false">
             <span>Ceremony</span>
@@ -452,11 +456,19 @@
           </button>
           <div class="info-content">
             <div class="info-body">
-							PLACEHOLDER TEXT FOR CEREMONY DETAILS
+							5:00 PM - 6:00 PM
+							<br>
+							<br>
+							Lone Oak Meadow Shelter
+							<br>
+							Sharonville, OH, 45241, United States
+							<br>
+							<br>
+							Attire: Casual
 						</div>
           </div>
         </section>
-        
+
 				<section class="info-section">
           <button class="info-toggle" type="button" aria-expanded="false">
             <span>Reception</span>
@@ -464,19 +476,17 @@
           </button>
           <div class="info-content">
             <div class="info-body">
-							PLACEHOLDER TEXT FOR RECEPTION
-						</div>
-          </div>
-        </section>
-
-        <section class="info-section">
-          <button class="info-toggle" type="button" aria-expanded="false">
-            <span>Lies & Rumors</span>
-            <span class="info-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="info-content">
-            <div class="info-body">
-							PLACEHOLDER TEXT FOR LIES AND RUMORS
+							6:30 PM - 9:00 PM
+							<br>
+							<br>
+							Castle Skateland
+							<br>
+							980 Loveland Madeira Road
+							<br>
+							Loveland, OH, 45410, United States
+							<br>
+							<br>
+							Attire: Skating Clothes
 						</div>
           </div>
         </section>
