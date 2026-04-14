@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bailey & Ryan RSVP</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --black:		#0f0f0f;
+      --charcoal: #171717;
+      --metal:		#c7ceb4;
+      --silver:		#eef2df;
+      --moss:			#4d5644;
+      --earth:		#6a6b58;
+      --line:			#3f433d;
+      --text:			#f2f6e3;
+      --muted:		#d4dbc0;
+      --danger:		#c78484;
+      --success:	#9fb091;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      color: var(--text);
+      background:
+        linear-gradient(rgba(8, 10, 9, 0.82), rgba(8, 10, 9, 0.92)),
+        linear-gradient(rgba(56, 64, 49, 0.36), rgba(56, 64, 49, 0.24)),
+        url("./assets/background.png") center center / cover no-repeat,
+        #0b0b0b;
+      padding: 24px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(215, 217, 212, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(215, 217, 212, 0.04) 1px, transparent 1px);
+      background-size: 32px 32px;
+      mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 85%);
+      mix-blend-mode: soft-light;
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top left, rgba(106, 107, 88, 0.16), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(77, 86, 68, 0.18), transparent 30%),
+        rgba(0, 0, 0, 0.18);
+      mix-blend-mode: color;
+      opacity: 0.95;
+    }
+
+    main {
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      min-height: calc(100vh - 48px);
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      gap: 48px;
+    }
+
+    .hero,
+    .panel {
+      padding: 48px;
+    }
+
+    .hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-self: flex-end;
+      gap: 20px;
+      min-height: 100%;
+      max-width: 40rem;
+      background: none;
+      padding-left: 0;
+      padding-bottom: 0;
+    }
+
+    .mark {
+      display: inline-block;
+      width: fit-content;
+      padding: 6px 10px;
+      border: 1px solid var(--line);
+      color: var(--metal);
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-size: 0.72rem;
+    }
+
+    h1 {
+      margin: 20px 0 18px;
+      font-size: clamp(3rem, 7vw, 5.6rem);
+      line-height: 0.98;
+      font-weight: 400;
+      color: var(--silver);
+      font-family: "Fondamento", "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, Georgia, serif;
+      letter-spacing: 0.02em;
+      text-wrap: balance;
+    }
+
+    .hero-copy,
+    .details,
+    .panel-header p,
+    .note {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 1rem;
+      max-width: 34rem;
+    }
+
+    .details {
+      display: grid;
+      gap: 10px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line);
+      max-width: 24rem;
+    }
+
+    .details strong {
+      display: block;
+      color: var(--silver);
+      font-weight: 400;
+      margin-bottom: 4px;
+    }
+
+    .panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-self: stretch;
+      gap: 28px;
+      width: min(100%, 460px);
+      margin-left: auto;
+      border: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.34));
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+    }
+
+    .panel-header h2 {
+      margin: 0 0 12px;
+      font-size: 2rem;
+      font-weight: 400;
+      color: var(--silver);
+    }
+
+    form {
+      display: grid;
+      gap: 22px;
+    }
+
+    .field {
+      display: grid;
+      gap: 10px;
+    }
+
+    label,
+    legend {
+      color: var(--metal);
+      font-size: 0.9rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    input,
+    select {
+      width: 100%;
+      padding: 15px 16px;
+      border: 1px solid var(--line);
+      border-radius: 0;
+      font: inherit;
+      color: var(--text);
+      background: rgba(10, 12, 10, 0.18);
+      appearance: none;
+    }
+
+    input::placeholder {
+      color: #7f817c;
+    }
+
+    input:focus,
+    select:focus {
+      outline: none;
+      border-color: var(--silver);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    fieldset {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .choice-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .choice {
+      position: relative;
+      border: 1px solid var(--line);
+      background: rgba(10, 12, 10, 0.18);
+    }
+
+    .choice input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    .choice span {
+      display: block;
+      padding: 15px 16px;
+      color: var(--muted);
+      text-transform: none;
+      letter-spacing: 0;
+      font-size: 1rem;
+    }
+
+    .choice input:checked + span {
+      background: rgba(77, 86, 68, 0.25);
+      color: var(--silver);
+    }
+
+    button {
+      padding: 16px 18px;
+      border: 1px solid var(--silver);
+      border-radius: 0;
+      font: inherit;
+      color: var(--silver);
+      background: transparent;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    button:hover,
+    button:focus-visible {
+      background: var(--silver);
+      color: var(--black);
+      outline: none;
+    }
+
+    button:disabled {
+      opacity: 0.6;
+      cursor: wait;
+    }
+
+    .status {
+      min-height: 1.5rem;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .status.error {
+      color: var(--danger);
+    }
+
+    .status.success {
+      color: var(--success);
+    }
+
+    .note {
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 860px) {
+      main {
+        flex-direction: column;
+        justify-content: flex-end;
+        gap: 28px;
+      }
+
+      .hero {
+        min-height: auto;
+        max-width: none;
+        align-self: stretch;
+        padding: 48px 48px 0;
+      }
+
+      .panel {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 560px) {
+      body {
+        padding: 0;
+      }
+
+      main {
+        min-height: 100vh;
+      }
+
+      .hero,
+      .panel {
+        padding: 28px 20px;
+      }
+
+      .hero {
+        padding-bottom: 0;
+      }
+
+      .choice-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <section class="hero">
+      <div>
+        <h1>The Wedding<br>of<br>Bailey<br>& Ryan</h1>
+        <p class="hero-copy">
+				You have been formally invited to our wedding.
+        </p>
+      </div>
+    </section>
+
+    <section class="panel">
+      <div class="panel-header">
+        <p>Complete the fields below once. We will use the information as submitted.</p>
+      </div>
+
+      <form id="rsvp-form">
+        <div class="field">
+          <label for="name">Full Name</label>
+          <input id="name" name="name" type="text" autocomplete="name" required>
+        </div>
+
+        <div class="field">
+          <label for="phone">Phone Number</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+        </div>
+
+        <div class="field">
+          <label for="party-size">Members In Your Party</label>
+          <select id="party-size" name="partySize" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+          </select>
+        </div>
+
+        <button type="submit" id="submit-button">Submit</button>
+        <p class="status" id="form-status" aria-live="polite"></p>
+      </form>
+
+    </section>
+  </main>
+
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyKgsRkPPVUKkIMycDOmH0F95eRUUFEvVF1_BqpfkWEWmYEX5xHcsKK2iqp27FsK1V7/exec";
+
+    const form = document.getElementById("rsvp-form");
+    const statusText = document.getElementById("form-status");
+    const submitButton = document.getElementById("submit-button");
+
+    function setStatus(message, type) {
+      statusText.textContent = message;
+      statusText.className = type ? `status ${type}` : "status";
+    }
+
+    function normalizePhoneNumber(value) {
+      return value.replace(/[^\d+()\-\s]/g, "").trim();
+    }
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      setStatus("", "");
+
+      if (!GOOGLE_SCRIPT_URL.startsWith("http")) {
+        setStatus("Add your Google Apps Script URL before using this form.", "error");
+        return;
+      }
+
+      const formData = new FormData(form);
+      const payload = {
+        name: formData.get("name").toString().trim(),
+        phone: normalizePhoneNumber(formData.get("phone").toString()),
+        partySize: formData.get("partySize").toString(),
+        submittedAt: new Date().toISOString()
+      };
+
+      if (!payload.name || !payload.phone || !payload.partySize) {
+        setStatus("Please complete all fields.", "error");
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Submitting...";
+
+      try {
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error("The form could not be submitted.");
+        }
+
+        form.reset();
+        setStatus("Response received.", "success");
+      } catch (error) {
+        setStatus("Submission failed. Check the script URL and deployment settings.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = "Submit Response";
+      }
+    });
+  </script>
+</body>
+</html>
