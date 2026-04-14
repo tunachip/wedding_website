@@ -166,6 +166,91 @@
       gap: 22px;
     }
 
+    .info-drawer {
+      margin-top: 8px;
+      display: grid;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .info-section {
+      border: 1px solid rgba(238, 242, 223, 0.2);
+      background: rgba(0, 0, 0, 0.24);
+      backdrop-filter: blur(4px);
+      transition: background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .info-section:hover {
+      background: rgba(30, 34, 24, 0.42);
+      border-color: rgba(238, 242, 223, 0.38);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.2);
+    }
+
+    .info-toggle {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      cursor: pointer;
+      padding: 16px 18px;
+      text-align: left;
+      color: var(--silver);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .info-toggle:hover,
+    .info-toggle:focus-visible {
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      outline: none;
+    }
+
+    .info-section.open .info-toggle {
+      border-bottom: 1px solid rgba(238, 242, 223, 0.16);
+    }
+
+    .info-icon {
+      font-size: 1rem;
+      line-height: 1;
+      transition: transform 0.2s ease;
+    }
+
+    .info-section.open .info-icon {
+      transform: rotate(45deg);
+    }
+
+    .info-content {
+      display: grid;
+      grid-template-rows: 0fr;
+      overflow: hidden;
+      transition: grid-template-rows 0.22s ease;
+    }
+
+    .info-section.open .info-content {
+      grid-template-rows: 1fr;
+    }
+
+    .info-body {
+      overflow: hidden;
+      padding: 0 18px;
+      color: var(--muted);
+      line-height: 1.7;
+      background: transparent;
+      opacity: 0;
+      transition: padding 0.22s ease, opacity 0.16s ease;
+    }
+
+    .info-section.open .info-body {
+      padding: 16px 18px 18px;
+      background: rgba(0, 0, 0, 0.18);
+      opacity: 1;
+    }
+
     .field {
       display: grid;
       gap: 10px;
@@ -347,6 +432,36 @@
         <p>Complete the fields below once. We will use the information as submitted.</p>
       </div>
 
+      <div class="info-drawer">
+        <section class="info-section">
+          <button class="info-toggle" type="button" aria-expanded="false">
+            <span>Ceremony Details</span>
+            <span class="info-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="info-content">
+            <div class="info-body">Add ceremony time, venue, parking notes, and arrival guidance here.</div>
+          </div>
+        </section>
+        <section class="info-section">
+          <button class="info-toggle" type="button" aria-expanded="false">
+            <span>Reception Details</span>
+            <span class="info-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="info-content">
+            <div class="info-body">Add reception address, dinner timing, dress expectations, or schedule notes here.</div>
+          </div>
+        </section>
+        <section class="info-section">
+          <button class="info-toggle" type="button" aria-expanded="false">
+            <span>Travel And Lodging</span>
+            <span class="info-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="info-content">
+            <div class="info-body">Add hotel blocks, airport guidance, shuttle information, or local recommendations here.</div>
+          </div>
+        </section>
+      </div>
+
       <form id="rsvp-form">
         <div class="field">
           <label for="name">Full Name</label>
@@ -355,7 +470,7 @@
 
         <div class="field">
           <label for="phone">Phone Number</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel" required>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" inputmode="numeric" maxlength="14" placeholder="(555) 123-4567" required>
         </div>
 
         <div class="field">
@@ -385,15 +500,38 @@
     const form = document.getElementById("rsvp-form");
     const statusText = document.getElementById("form-status");
     const submitButton = document.getElementById("submit-button");
+    const phoneInput = document.getElementById("phone");
+    const infoToggles = document.querySelectorAll(".info-toggle");
 
     function setStatus(message, type) {
       statusText.textContent = message;
       statusText.className = type ? `status ${type}` : "status";
     }
 
-    function normalizePhoneNumber(value) {
-      return value.replace(/[^\d+()\-\s]/g, "").trim();
+    function formatPhoneNumber(value) {
+      const digits = value.replace(/\D/g, "").slice(0, 10);
+
+      if (digits.length === 0) return "";
+      if (digits.length < 4) return `(${digits}`;
+      if (digits.length < 7) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+      return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`;
     }
+
+    function hasValidPhoneNumber(value) {
+      return value.replace(/\D/g, "").length === 10;
+    }
+
+    phoneInput.addEventListener("input", () => {
+      phoneInput.value = formatPhoneNumber(phoneInput.value);
+    });
+
+    infoToggles.forEach((toggle) => {
+      toggle.addEventListener("click", () => {
+        const section = toggle.closest(".info-section");
+        const isOpen = section.classList.toggle("open");
+        toggle.setAttribute("aria-expanded", String(isOpen));
+      });
+    });
 
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -407,13 +545,19 @@
       const formData = new FormData(form);
       const payload = {
         name: formData.get("name").toString().trim(),
-        phone: normalizePhoneNumber(formData.get("phone").toString()),
+        phone: formatPhoneNumber(formData.get("phone").toString()),
         partySize: formData.get("partySize").toString(),
         submittedAt: new Date().toISOString()
       };
 
       if (!payload.name || !payload.phone || !payload.partySize) {
         setStatus("Please complete all fields.", "error");
+        return;
+      }
+
+      if (!hasValidPhoneNumber(payload.phone)) {
+        setStatus("Enter a valid 10-digit phone number.", "error");
+        phoneInput.focus();
         return;
       }
 
