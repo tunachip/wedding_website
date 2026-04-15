@@ -73,7 +73,8 @@
       max-width: 1400px;
       margin: 0 auto;
       min-height: calc(100vh - 48px);
-      display: flex;
+      display: grid;
+      grid-template-columns: clamp(22rem, 40vw, 40rem) minmax(20rem, 460px);
       justify-content: space-between;
       align-items: stretch;
       gap: 48px;
@@ -88,10 +89,13 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      align-self: flex-end;
+      align-self: start;
       gap: 20px;
-      min-height: 100%;
-      max-width: 40rem;
+      min-height: calc(100vh - 48px);
+      width: 100%;
+      max-width: none;
+      position: sticky;
+      top: 0;
       background: none;
       padding-left: 0;
       padding-bottom: 0;
@@ -455,7 +459,7 @@
 
     @media (max-width: 860px) {
       main {
-        flex-direction: column;
+        grid-template-columns: 1fr;
         justify-content: flex-end;
         gap: 28px;
       }
@@ -464,6 +468,7 @@
         min-height: auto;
         max-width: none;
         align-self: stretch;
+        position: static;
         padding: 48px 48px 0;
       }
 
@@ -509,46 +514,63 @@
 
     <section class="panel">
       <div class="panel-header line-title">
-        <div class="panel-title">Details</div>
+				<div class="panel-title">DETAILS</div>
       </div>
 
-      <span class="hero-copy details-summary">
-        Date:<br> Sunday, June 7th 2026
-      </span>
+			<span class="hero-copy details-summary">
+				Date:<br>  Sunday, June 7th 2026
+			</span>
 
       <div class="info-drawer">
-        <section class="info-section">
+				<section class="info-section">
           <button class="info-toggle" type="button" aria-expanded="false">
-            <span>Ceremony Details</span>
+            <span>Ceremony  (5:00 PM - 6:00 PM)</span>
             <span class="info-icon" aria-hidden="true">+</span>
           </button>
           <div class="info-content">
-            <div class="info-body">Add ceremony time, venue, parking notes, and arrival guidance here.</div>
+            <div class="info-body">
+							Location:
+							<br>
+							Lone Oak Meadow Shelter
+							<br>
+							Sharon Woods
+							<br>
+							Sharonville, OH, 45241
+							<br>
+							United States
+							<br>
+							<br>
+							Attire: Casual
+						</div>
           </div>
         </section>
-        <section class="info-section">
+
+				<section class="info-section">
           <button class="info-toggle" type="button" aria-expanded="false">
-            <span>Reception Details</span>
+            <span>Reception  (6:30 PM - 9:00 PM)</span>
             <span class="info-icon" aria-hidden="true">+</span>
           </button>
           <div class="info-content">
-            <div class="info-body">Add reception address, dinner timing, dress expectations, or schedule notes here.</div>
-          </div>
-        </section>
-        <section class="info-section">
-          <button class="info-toggle" type="button" aria-expanded="false">
-            <span>Travel And Lodging</span>
-            <span class="info-icon" aria-hidden="true">+</span>
-          </button>
-          <div class="info-content">
-            <div class="info-body">Add hotel blocks, airport guidance, shuttle information, or local recommendations here.</div>
+            <div class="info-body">
+							Location:
+							<br>
+							Castle Skateland
+							<br>
+							980 Loveland Madeira Road
+							<br>
+							Loveland, OH, 45410
+							<br>
+							United States
+							<br>
+							<br>
+							Attire: Skating Clothes
+						</div>
           </div>
         </section>
       </div>
 
       <div class="panel-header line-title">
-        <div class="panel-title">RSVP</div>
-        <p>Complete the fields below once. We will use the information as submitted.</p>
+				<div class="panel-title">RSVP</div>
       </div>
 
       <form id="rsvp-form">
@@ -580,10 +602,15 @@
         <p class="status" id="form-status" aria-live="polite"></p>
       </form>
 
-      <div class="panel-header line-title">
-				<div class="panel-title">Registry</div>
-        <a class="registry-link" href="https://www.myregistry.com/wedding-registry/bailey-miller-and-ryan-bennett/5397596" target="_blank" rel="noopener noreferrer">Wedding Registry</a>
-      </div>
+			<a
+				class="registry-link"
+				href="https://www.myregistry.com/wedding-registry/bailey-miller-and-ryan-bennett/5397596"
+				target="_blank"
+				rel="noopener noreferrer"
+				style="color:var(--wine)"
+			>
+				WEDDING REGISTRY
+			</a>
 
     </section>
   </main>
